@@ -12,4 +12,6 @@
 */
 
 
-Route::get('/', 'PostController@index') -> name('post.index');
+//Route::get('/', 'PostController@index') -> name('post.index');
+Route::get('/posts/published', 'PostController@indexPublished') -> name('post.index.published');
+Route::resource('posts','PostController');

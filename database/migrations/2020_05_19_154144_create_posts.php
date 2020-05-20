@@ -15,11 +15,13 @@ class CreatePosts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->string('title', 150);
             $table->string('slug');
             $table->text('body');
-            $table->string('author');
-            $table->text('img');
+            $table->string('author', 100);
+            $table->string('img')->default('https://picsum.photos/200/300');
+            $table->string('location')->nullable();
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }
