@@ -12,12 +12,21 @@
           <thead>
             <th>Titolo</th>
             <th>Autore</th>
+            <th>Pulsanti</th>
           </thead>
           <tbody>
             @foreach ($posts as $post)
                 <tr>
-                <td><a href="{{route('posts.show', $post->slug)}}">{{$post->title}}</a></td>
-                  <td>Scritto da {{$post->author}}</td>
+                    <td>{{$post->title}}</td>
+                    <td>Scritto da {{$post->author}}</td>
+                    <td> <a href="{{route('posts.show', $post->id)}}">Visualizza</a> </td>
+                    <td> <a href="{{route('posts.edit', $post->id)}}">Modifica</a> </td>
+                    <td> <form  action="{{route('posts.destroy', $post->id)}}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" name="button">Elimina</button>
+
+                    </form> </td>
                 </tr>
             @endforeach
           </tbody>

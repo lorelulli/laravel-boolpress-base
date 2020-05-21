@@ -70,12 +70,15 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        if (empty($post)) {
+            abort('404');
+        }
+        return view('posts.edit',compact('post'));
     }
 
     /**
@@ -87,7 +90,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $post = Post::find($id);
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['title'], '-');
+        $post->fill($data);
+        $post->update();
+        return redirect()->route('posts.show',compact('post'));
+
     }
 
     /**
@@ -98,6 +108,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post-> delete();
+        return redirect()-> route('posts.index');
     }
 }
